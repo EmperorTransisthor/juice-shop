@@ -15,6 +15,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FormSubmitService } from '../Services/form-submit.service'
 import { ConfigurationService } from '../Services/configuration.service'
 import { BasketService } from '../Services/basket.service'
+import { nanoid } from 'nanoid'
 
 library.add(faKey, faEye, faEyeSlash, faGoogle)
 dom.watch()
@@ -29,6 +30,7 @@ const oauthProviderUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
 export class LoginComponent implements OnInit {
   public emailControl = new UntypedFormControl('', [Validators.required])
   public passwordControl = new UntypedFormControl('', [Validators.required])
+  public state: any
   public hide = true
   public user: any
   public rememberMe: UntypedFormControl = new UntypedFormControl(false)
@@ -103,6 +105,7 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin () {
-    this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}`)
+    this.state = nanoid(15);
+    this.windowRefService.nativeWindow.location.replace(`${oauthProviderUrl}?client_id=${this.clientId}&response_type=token&scope=email&redirect_uri=${this.redirectUri}&state=${this.state}`)
   }
 }
