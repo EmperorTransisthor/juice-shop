@@ -22,9 +22,9 @@ module.exports = function searchProducts () {
     criteria = (criteria.length <= 200) ? criteria : criteria.substring(0, 200)
     const onlyLettersPattern = /^[A-Za-z]+$/;
 
-    if(!criteria.match(onlyLettersPattern)){
-      return res.status(400).json({ err: "No special characters and no numbers, please!"})
-    }
+    // if(!criteria.match(onlyLettersPattern)){
+    //   return res.status(400).json({ err: "No special characters and no numbers, please!"})
+    // }
 
     models.sequelize.query(`SELECT * FROM Products WHERE ((name LIKE '%${criteria}%' OR description LIKE '%${criteria}%') AND deletedAt IS NULL) ORDER BY name`) // vuln-code-snippet vuln-line unionSqlInjectionChallenge dbSchemaChallenge
       .then(([products]: any) => {
